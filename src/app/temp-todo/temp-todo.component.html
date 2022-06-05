@@ -1,0 +1,88 @@
+<div class="container-fluid todo-app-container">
+  <div class="row">
+    <div class="col-md-3 bg-color">
+      <div class="todo-container">
+        <mat-card class="mt-3">
+          <form [formGroup]="todoForm">
+            <mat-form-field appearance="outline">
+              <mat-label>Task Name</mat-label>
+              <input formControlName="taskName" matInput>
+              <mat-hint>Add your task name</mat-hint>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Story Points</mat-label>
+              <input type="number" formControlName="storyPoints" matInput>
+              <mat-hint>Add your Story Point</mat-hint>
+            </mat-form-field>
+            <button
+              *ngIf="!isEditEnabled"
+              mat-raised-button color="primary"
+              class="mt-2"
+              [disabled]="todoForm.invalid"
+              (click)="addTask()"
+            >
+              Create task
+            </button> <br>
+            <button
+              *ngIf="isEditEnabled"
+              mat-raised-button color="primary"
+              class="mt-2"
+              [disabled]="todoForm.invalid"
+              (click)="updateTask()"
+            >
+              Update task
+            </button> <br>
+          </form>
+        </mat-card>
+      </div>
+    </div>
+    <div class="col-md-9 mt-3">
+       <div cdkDropListGroup>
+        <div class="row">
+
+          <div class="col-md-4">
+            <div class="example-container">
+              <h2 class="header-title">TO-DO <span *ngIf="tasks.length > 0"> - {{tasks.length}}</span></h2>
+
+              <app-todo-card
+                [todoForm]="todoForm"
+                [tasks]="tasks"
+                [canEditTask]="true"
+                (initiateEditTask)="initiateEditTask($event)"
+              >
+              </app-todo-card>
+            </div>
+
+          </div>
+
+          <div class="col-md-4">
+            <div class="example-container">
+              <h2 class="header-title">In Progress <span *ngIf="inProgress.length > 0"> - {{inProgress.length}}</span></h2>
+
+              <app-todo-card
+                [todoForm]="todoForm"
+                [tasks]="inProgress"
+              ></app-todo-card>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="example-container">
+              <h2 class="header-title">Done <span *ngIf="done.length > 0"> - {{done.length}}</span></h2>
+
+              <app-todo-card
+                [todoForm]="todoForm"
+                [tasks]="done"
+                [isTaskCompleted]="true"
+              ></app-todo-card>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+
+
+    </div>
+  </div>
+</div>
